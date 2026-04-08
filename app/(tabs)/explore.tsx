@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import { Avatar, List, Searchbar } from "react-native-paper";
@@ -13,6 +14,7 @@ export default function ExploreScreen() {
   const [ledamot, setLedamoter] = useState<Ledamot[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchLedamoter = async () => {
@@ -63,6 +65,17 @@ export default function ExploreScreen() {
             renderItem={({ item }) => (
               <List.Item
                 title={`${item.first_name} ${item.last_name}`}
+                onPress={() => {
+                  router.push({
+                    pathname: "/detailedview",
+                    params: {
+                      id: item.id,
+                      first_name: item.first_name,
+                      last_name: item.last_name,
+                      image: item.image?.url,
+                    },
+                  });
+                }}
                 left={(props) =>
                   item.image && item.image.url ? (
                     <Avatar.Image
