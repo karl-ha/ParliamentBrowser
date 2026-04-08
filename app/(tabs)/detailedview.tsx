@@ -8,9 +8,12 @@ export default function DetailView() {
   const [extra, setExtra] = useState<any>(null);
 
   useEffect(() => {
-    fetch(`https://lagtinget.ax{id}.json`)
+    if (!id) return;
+
+    fetch(`https://api.lagtinget.ax/api/persons/${id}.json`)
       .then((res) => res.json())
-      .then((data) => setExtra(data));
+      .then((data) => setExtra(data))
+      .catch((err) => console.error("Fetch error:", err));
   }, [id]);
 
   return (
@@ -27,7 +30,7 @@ export default function DetailView() {
           <Text>Email: {extra.email}</Text>
           <Text>Profession: {extra.profession}</Text>
           <Text>Birthday: {extra.birthday}</Text>
-          <Text>Adress: {extra.adress}</Text>
+          <Text>Adress: {extra.address}</Text>
         </View>
       )}
     </View>
