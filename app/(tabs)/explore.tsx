@@ -1,6 +1,12 @@
-import React from 'react';
-import {View, FlatList, StyleSheet, Text, StatusBar} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import { useEffect, useState } from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
+import { List, Text } from 'react-native-paper';
+
+type Ledamot = { id: number; first_name: string; last_name: string };
+
+export default function ExploreScreen() {
+  const [ledamot, setLedamoter] = useState<Ledamot[]>([]);
+  const [loading, setLoading] = useState(true);
 
 const DATA = [
   {
