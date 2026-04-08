@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import { List, Searchbar } from "react-native-paper";
+import { Avatar, List, Searchbar } from "react-native-paper";
 
-type Ledamot = { id: number; first_name: string; last_name: string };
+type Ledamot = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  image: { url: string } | null;
+};
 
 export default function ExploreScreen() {
   const [ledamot, setLedamoter] = useState<Ledamot[]>([]);
@@ -29,7 +34,9 @@ export default function ExploreScreen() {
     fetchLedamoter();
   }, []);
 
-  const updateSearch = (query: string) => {setSearch(query);};
+  const updateSearch = (query: string) => {
+    setSearch(query);
+  };
 
   const filteredLedamoter = ledamot.filter((item) =>
     `${item.first_name} ${item.last_name}`
@@ -41,7 +48,7 @@ export default function ExploreScreen() {
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <Searchbar
-          placeholder="search"
+          placeholder="Sök ledamot..."
           onChangeText={updateSearch}
           value={search}
         />
@@ -56,7 +63,17 @@ export default function ExploreScreen() {
             renderItem={({ item }) => (
               <List.Item
                 title={`${item.first_name} ${item.last_name}`}
-                left={(props) => <List.Icon {...props} icon="account" />}
+                left={(props) =>
+                  item.image && item.image.url ? (
+                    <Avatar.Image
+                      {...props}
+                      size={48}
+                      source={{ uri: item.image.url }}
+                    />
+                  ) : (
+                    <Avatar.Icon {...props} size={48} icon="account" />
+                  )
+                }
               />
             )}
           />
