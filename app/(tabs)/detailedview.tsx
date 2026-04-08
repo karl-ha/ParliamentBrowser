@@ -17,7 +17,7 @@ export default function DetailView() {
   }, [id]);
 
   return (
-    <View style={{ flex: 1, padding: 20, alignItems: "center" }}>
+    <View style={{ flex: 1, padding: 100, alignItems: "center" }}>
       {image ? (
         <Avatar.Image size={100} source={{ uri: image as string }} />
       ) : null}
