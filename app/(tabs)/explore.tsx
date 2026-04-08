@@ -13,7 +13,9 @@ export default function ExploreScreen() {
       try {
         const response = await fetch('https://api.lagtinget.ax/api/persons.json');
         const data = await response.json();
-        setLedamoter(data);
+        
+      const activeLedamot = data.filter((item: any) => item.state === "1");
+      setLedamoter(activeLedamot);
       } catch (error) {
         console.error('Error:', error);
       } finally {
